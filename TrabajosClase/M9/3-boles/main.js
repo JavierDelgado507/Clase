@@ -14,7 +14,8 @@ function random(min, max) {
 // funció per generar un color aleatori
 function randomRGB() {
   //@TODO3: Retornar un color aleatori rgb (exemple: rgb(valor,valor,valor) o #a1b2c3). Es pot aprofitar la funció random()
-  return '';
+  var color = "("+random(255)+"," + random(255) + "," + random(255) +")";
+	return "rgb" + color;
 }
 
 class Bola {
