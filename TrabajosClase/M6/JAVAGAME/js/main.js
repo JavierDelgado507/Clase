@@ -86,7 +86,6 @@ function colisionMonedes() {
     gy + altoGeorge > mdy
   ) {
     posicionarMonedaDorada();
-
   }
 
   if (
