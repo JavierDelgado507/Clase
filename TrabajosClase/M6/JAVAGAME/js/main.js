@@ -14,6 +14,7 @@ let indiceGeorge = 0;
 let indiceMonedaDorada = 0;
 let indiceMonedaTransparente = 0;
 let indiceFantasmaAzul = 0;
+let indiceFantasmaNegro = 0;
 let posicionGeorge = 0;
 
 let gx;
@@ -24,6 +25,8 @@ let mty;
 let mtx;
 let fax;
 let fay;
+let fnx;
+let fny;
 
 //ctx == context
 const ctx = canvas.getContext("2d");
@@ -41,7 +44,10 @@ const monedaTransparente = new Image();
 monedaTransparente.src = "./../JAVAGAME/assets/coin_avr.png";
 
 const fantasmaAzul = new Image();
-fantasmaAzul.src = "./../JAVAGAME/assets/fantasmaAzul.png"
+fantasmaAzul.src = "./../JAVAGAME/assets/fantasmaAzul.png";
+
+const fantasmaNegro = new Image();
+fantasmaNegro.src = "./../JAVAGAME/assets/fantasmaNegro.png";
 
 fondo.onload = function () {
   //UNA sola Vez
@@ -49,6 +55,7 @@ fondo.onload = function () {
   posicionarMonedaDorada();
   posicionarMonedaTransparente();
   posicionarFantasmaAzul();
+  posicionarFantasmaNegro();
   
 
   //Dibujar se ejecuta en bucle
@@ -72,6 +79,11 @@ function posicionarMonedaTransparente() {
 function posicionarFantasmaAzul() {
   fax = Math.floor(Math.random() * (canvas.width - anchoFantasma * 2));
   fay = Math.floor(Math.random() * (canvas.height - altoFantasma * 2));
+}
+
+function posicionarFantasmaNegro() {
+  fnx = Math.floor(Math.random() * (canvas.width - anchoFantasma * 2));
+  fny = Math.floor(Math.random() * (canvas.height - altoFantasma * 2));
 }
 
 document.addEventListener("keydown", function (event) {
@@ -110,6 +122,20 @@ function fantasma() {
     fay += 0.5;
   } else if (fay > gy) {
     fay -= 0.5;
+  }
+}
+
+function fantasmaNegroMover() {
+  if (fnx < gx) {
+    fnx += 0.5;
+  } else if (fnx > gx) {
+    fnx -= 0.5;
+  }
+
+  if (fny < gy) {
+    fny += 0.5;
+  } else if (fny > gy) {
+    fny -= 0.5;
   }
 }
 
@@ -191,6 +217,18 @@ function dibujar() {
     altoFantasma * 0.9 //Alto en la pantalla
   );
 
+  ctx.drawImage(
+    fantasmaNegro, //Imagen moneda Dorada
+    indiceFantasmaNegro * anchoFantasma, //Posicion X en la imagen
+    0, //Posicion Y en la Imagen
+    anchoFantasma, //Ancho de la Imagen
+    altoFantasma, //Alto de la imagen
+    fnx, //Posicion X en la pantalla
+    fny, //Posicion Y en la pantalla
+    anchoFantasma * 0.9, //Ancho en la pantalla
+    altoFantasma * 0.9 //Alto en la pantalla
+  );
+
 
   if (indiceGeneral % 10 == 0) {
     indiceMonedaDorada++;
@@ -203,6 +241,7 @@ function dibujar() {
 
     if (indiceGeorge % 20 == 0){
       indiceFantasmaAzul++;
+      indiceFantasmaNegro++;
     }
   }
 
@@ -219,13 +258,17 @@ function dibujar() {
   if (indiceFantasmaAzul >= 4) {
     indiceFantasmaAzul = 0;
   }
-
+  if (indiceFantasmaNegro >= 4) {
+    indiceFantasmaNegro = 0;
+  }
   if (indiceGeneral >= 1000000) {
     indiceGeneral = 0;
   }
 
   colisionMonedes();
   fantasma();
+  fantasmaNegroMover();
+  
   // setInterval(dibujar,100);
 
   requestAnimationFrame(dibujar);
