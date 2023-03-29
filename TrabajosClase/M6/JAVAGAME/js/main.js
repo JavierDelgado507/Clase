@@ -6,11 +6,15 @@ const anchoGeorge = 48;
 const altoGeorge = 48;
 const anchoMoneda = 16;
 const altoMoneda = 16;
+const anchoFantasma = 64;
+const altoFantasma = 64;
 
 let indiceGeneral = 0;
 let indiceGeorge = 0;
 let indiceMonedaDorada = 0;
 let indiceMonedaTransparente = 0;
+let indiceFantasmaAzul = 0;
+let posicionGeorge = 0;
 
 let gx;
 let gy;
@@ -18,27 +22,34 @@ let mdx;
 let mdy;
 let mty;
 let mtx;
+let fax;
+let fay;
 
 //ctx == context
 const ctx = canvas.getContext("2d");
 
 const fondo = new Image();
-fondo.src = "../assets/hierba.jpg";
+fondo.src = "./../JAVAGAME/assets/hierba.jpg";
 
 const george = new Image();
-george.src = "./../assets/george.png";
+george.src = "./../JAVAGAME/assets/george.png";
 
 const monedaDorada = new Image();
-monedaDorada.src = "./../assets/coin_avr_color.png";
+monedaDorada.src = "./../JAVAGAME/assets/coin_avr_color.png";
 
 const monedaTransparente = new Image();
-monedaTransparente.src = "./../assets/coin_avr.png";
+monedaTransparente.src = "./../JAVAGAME/assets/coin_avr.png";
+
+const fantasmaAzul = new Image();
+fantasmaAzul.src = "./../JAVAGAME/assets/fantasmaAzul.png"
 
 fondo.onload = function () {
   //UNA sola Vez
   posicionarGeorge();
   posicionarMonedaDorada();
   posicionarMonedaTransparente();
+  posicionarFantasmaAzul();
+  
 
   //Dibujar se ejecuta en bucle
   dibujar();
@@ -58,25 +69,50 @@ function posicionarMonedaTransparente() {
   mty = Math.floor(Math.random() * (canvas.height - altoMoneda * 2));
 }
 
+function posicionarFantasmaAzul() {
+  fax = Math.floor(Math.random() * (canvas.width - anchoFantasma * 2));
+  fay = Math.floor(Math.random() * (canvas.height - altoFantasma * 2));
+}
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "s") {
     if (gy + 5 + altoGeorge < canvas.height) {
       gy += 5;
+      posicionGeorge = 0;
+      
     }
   } else if (event.key === "w") {
     if (gy - 5 > 0) {
       gy -= 5;
+      posicionGeorge = 90;
     }
   } else if (event.key === "a") {
     if (gx - 5 > 0) {
       gx -= 5;
+      posicionGeorge = 45;
     }
   } else if (event.key === "d") {
     if (gx + 5 + anchoGeorge < canvas.width) {
       gx += 5;
+      posicionGeorge = 135;
     }
   }
 });
+
+function fantasma() {
+  if (fax < gx) {
+    fax += 0.5;
+  } else if (fax > gx) {
+    fax -= 0.5;
+  }
+
+  if (fay < gy) {
+    fay += 0.5;
+  } else if (fay > gy) {
+    fay -= 0.5;
+  }
+}
+
 
 function colisionMonedes() {
   if (
@@ -109,7 +145,7 @@ function dibujar() {
 
   ctx.drawImage(
     george, //Imagen George
-    0, //Posicion X en la imagen
+    posicionGeorge, //Posicion X en la imagen
     indiceGeorge * altoGeorge, //Posicion Y en la Imagen
     anchoGeorge, //Ancho de la Imagen
     altoGeorge, //Alto de la imagen
@@ -143,10 +179,30 @@ function dibujar() {
     altoMoneda * 1.5 //Alto en la pantalla
   );
 
+  ctx.drawImage(
+    fantasmaAzul, //Imagen moneda Dorada
+    indiceFantasmaAzul * anchoFantasma, //Posicion X en la imagen
+    0, //Posicion Y en la Imagen
+    anchoFantasma, //Ancho de la Imagen
+    altoFantasma, //Alto de la imagen
+    fax, //Posicion X en la pantalla
+    fay, //Posicion Y en la pantalla
+    anchoFantasma * 0.9, //Ancho en la pantalla
+    altoFantasma * 0.9 //Alto en la pantalla
+  );
+
+
   if (indiceGeneral % 10 == 0) {
     indiceMonedaDorada++;
+   
+
     if (indiceMonedaDorada % 2 == 0) {
       indiceGeorge++;
+      
+    }
+
+    if (indiceGeorge % 20 == 0){
+      indiceFantasmaAzul++;
     }
   }
 
@@ -160,10 +216,16 @@ function dibujar() {
     indiceMonedaDorada = 0;
   }
 
+  if (indiceFantasmaAzul >= 4) {
+    indiceFantasmaAzul = 0;
+  }
+
   if (indiceGeneral >= 1000000) {
     indiceGeneral = 0;
   }
+
   colisionMonedes();
+  fantasma();
   // setInterval(dibujar,100);
 
   requestAnimationFrame(dibujar);
