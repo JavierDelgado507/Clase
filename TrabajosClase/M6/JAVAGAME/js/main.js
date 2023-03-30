@@ -86,6 +86,21 @@ function posicionarFantasmaNegro() {
   fny = Math.floor(Math.random() * (canvas.height - altoFantasma * 2));
 }
 
+document,addEventListener('keyup', (event) => {
+  delete this.keysPressed[event.key] === 's';
+});
+
+document.addEventListener('keydown', (event) =>{
+  keysPressed[event.key] = true;
+  if(keysPressed['Control'] && event.key == 'x'){
+    alert(event.key);
+  }
+} );
+
+document.addEventListener('keyup', (event) => {
+  delete keysPressed[event.key];
+});
+
 document.addEventListener("keydown", function (event) {
   if (event.key === "s") {
     if (gy + 5 + altoGeorge < canvas.height) {
@@ -108,6 +123,13 @@ document.addEventListener("keydown", function (event) {
       gx += 5;
       posicionGeorge = 135;
     }
+  }else if (keysPressed['w'] && event.key === 'd' ){
+    console.log("FUNCARIA");
+    if (gx + 5 + anchoGeorge < canvas.width && gy - 5 > 0 ) {
+      gx += 5;
+      gy -= 5;
+      posicionGeorge = 135;
+    }
   }
 });
 
@@ -115,7 +137,7 @@ function fantasma() {
   if (fax < gx) {
     fax += 0.5;
   } else if (fax > gx) {
-    fax -= 0.5;
+    fax -= 0.5 ;
   }
 
   if (fay < gy) {
@@ -136,6 +158,27 @@ function fantasmaNegroMover() {
     fny += 0.5;
   } else if (fny > gy) {
     fny -= 0.5;
+  }
+
+  if (
+    fax < fnx + anchoFantasma &&
+    fax + anchoFantasma > fnx &&
+    fay < fny + altoFantasma &&
+    fay + altoFantasma > fny
+  ){
+    fnx += 0.5;
+    fny += 0.5
+    
+  }
+  if (
+    fax > fnx + anchoFantasma &&
+    fax + anchoFantasma < fnx &&
+    fay > fny + altoFantasma &&
+    fay + altoFantasma < fny
+  ){
+    fnx -= 0.5;
+    fny -= 0.5
+    
   }
 }
 
@@ -225,8 +268,8 @@ function dibujar() {
     altoFantasma, //Alto de la imagen
     fnx, //Posicion X en la pantalla
     fny, //Posicion Y en la pantalla
-    anchoFantasma * 0.9, //Ancho en la pantalla
-    altoFantasma * 0.9 //Alto en la pantalla
+    anchoFantasma * 0.8, //Ancho en la pantalla
+    altoFantasma * 0.8 //Alto en la pantalla
   );
 
 
