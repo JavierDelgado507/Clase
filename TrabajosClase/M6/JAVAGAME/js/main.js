@@ -8,6 +8,8 @@ const anchoMoneda = 16;
 const altoMoneda = 16;
 const anchoFantasma = 64;
 const altoFantasma = 64;
+const altoEspada = 32;
+const anchoEspada = 32;
 
 let indiceGeneral = 0;
 let indiceGeorge = 0;
@@ -27,6 +29,8 @@ let fax;
 let fay;
 let fnx;
 let fny;
+let sx;
+let sy;
 
 //ctx == context
 const ctx = canvas.getContext("2d");
@@ -49,6 +53,12 @@ fantasmaAzul.src = "./../JAVAGAME/assets/fantasmaAzul.png";
 const fantasmaNegro = new Image();
 fantasmaNegro.src = "./../JAVAGAME/assets/fantasmaNegro.png";
 
+const sword = new Image();
+sword.src = "./../JAVAGAME/assets/sword.png";
+
+const yase = new Image();
+yase.src = "./../JAVAGAME/assets/yase.png";
+
 fondo.onload = function () {
   //UNA sola Vez
   posicionarGeorge();
@@ -56,6 +66,7 @@ fondo.onload = function () {
   posicionarMonedaTransparente();
   posicionarFantasmaAzul();
   posicionarFantasmaNegro();
+  posicionarSword();
   
 
   //Dibujar se ejecuta en bucle
@@ -86,51 +97,86 @@ function posicionarFantasmaNegro() {
   fny = Math.floor(Math.random() * (canvas.height - altoFantasma * 2));
 }
 
-document,addEventListener('keyup', (event) => {
-  delete this.keysPressed[event.key] === 's';
+function posicionarSword() {
+  sx = Math.floor(Math.random() * (canvas.width - anchoEspada * 2));
+  sy = Math.floor(Math.random() * (canvas.height - altoEspada * 2));
+}
+
+// document,addEventListener('keyup', (event) => {
+//   delete this.keysPressed[event.key] === 's';
+// });
+
+// document.addEventListener('keydown', (event) =>{
+//   keysPressed[event.key] = true;
+//   if(keysPressed['Control'] && event.key == 'x'){
+//     alert(event.key);
+//   }
+// } );
+
+// document.addEventListener('keyup', (event) => {
+//   delete keysPressed[event.key];
+// });
+
+// Objeto que almacena el estado de las teclas
+const teclasPulsadas = {};
+
+// Agregar un event listener para detectar cuando se presiona una tecla
+document.addEventListener('keydown', (event) => {
+  teclasPulsadas[event.key] = true;
 });
 
-document.addEventListener('keydown', (event) =>{
-  keysPressed[event.key] = true;
-  if(keysPressed['Control'] && event.key == 'x'){
-    alert(event.key);
-  }
-} );
-
+// Agregar un event listener para detectar cuando se suelta una tecla
 document.addEventListener('keyup', (event) => {
-  delete keysPressed[event.key];
+  teclasPulsadas[event.key] = false;
 });
 
 document.addEventListener("keydown", function (event) {
-  if (event.key === "s") {
-    if (gy + 5 + altoGeorge < canvas.height) {
-      gy += 5;
-      posicionGeorge = 0;
-      
-    }
-  } else if (event.key === "w") {
-    if (gy - 5 > 0) {
-      gy -= 5;
-      posicionGeorge = 90;
-    }
-  } else if (event.key === "a") {
-    if (gx - 5 > 0) {
-      gx -= 5;
-      posicionGeorge = 45;
-    }
-  } else if (event.key === "d") {
-    if (gx + 5 + anchoGeorge < canvas.width) {
+  if (teclasPulsadas['s'] && teclasPulsadas['d'] ){
+    if (gx + 5 + anchoGeorge < canvas.width && gy + 5 + altoGeorge < canvas.height) {
       gx += 5;
+      gy += 5;
       posicionGeorge = 135;
     }
-  }else if (keysPressed['w'] && event.key === 'd' ){
-    console.log("FUNCARIA");
+  } else if (teclasPulsadas['s'] && teclasPulsadas['a'] ){
+    if (gx - 5 > 0 && gy + 5 + altoGeorge < canvas.height) {
+      gx -= 5;
+      gy += 5;
+      posicionGeorge = 45;
+    }
+  } else if (teclasPulsadas['w'] && teclasPulsadas['a'] ){
+    if (gx - 5 > 0 && gy - 5 > 0) {
+      gx -= 8;
+      gy -= 8;
+      posicionGeorge = 45;
+    }
+  } else if (teclasPulsadas['s']) {
+    if (gy + 5 + altoGeorge < canvas.height) {
+      gy += 10;
+      posicionGeorge = 0;
+    }
+  } else if (teclasPulsadas['w'] && teclasPulsadas['d'] ){
     if (gx + 5 + anchoGeorge < canvas.width && gy - 5 > 0 ) {
-      gx += 5;
-      gy -= 5;
+      gx += 8;
+      gy -= 8;
+      posicionGeorge = 135;
+    }
+  } else if (teclasPulsadas['w']) {
+    if (gy - 5 > 0) {
+      gy -= 10;
+      posicionGeorge = 90;
+    }
+  } else if (teclasPulsadas['a']) {
+    if (gx - 5 > 0) {
+      gx -= 10;
+      posicionGeorge = 45;
+    }
+  } else if (teclasPulsadas['d']) {
+    if (gx + 5 + anchoGeorge < canvas.width) {
+      gx += 10;
       posicionGeorge = 135;
     }
   }
+  
 });
 
 function fantasma() {
@@ -159,29 +205,32 @@ function fantasmaNegroMover() {
   } else if (fny > gy) {
     fny -= 0.5;
   }
+  }
 
+
+function colisionEntreFantasma(){
   if (
-    fax < fnx + anchoFantasma &&
-    fax + anchoFantasma > fnx &&
-    fay < fny + altoFantasma &&
-    fay + altoFantasma > fny
-  ){
-    fnx += 0.5;
-    fny += 0.5
-    
-  }
-  if (
-    fax > fnx + anchoFantasma &&
-    fax + anchoFantasma < fnx &&
-    fay > fny + altoFantasma &&
-    fay + altoFantasma < fny
-  ){
-    fnx -= 0.5;
-    fny -= 0.5
-    
-  }
+    fax < fnx + anchoFantasma -30 &&
+    fax + anchoFantasma - 30 > fnx &&
+    fay < fny + altoFantasma - 30 &&
+    fay + altoFantasma - 30  > fny
+  ) {
+    // Hay colisión entre los fantasmas
+    if (fnx > fax) {
+      // Mover el primer fantasma hacia la izquierda
+      fnx += 0.5;
+      fny += 0.5;
+      fax -= 0.5;
+      fay -= 0.5;
+    } else {
+      // Mover el primer fantasma hacia la derecha
+      fnx -= 0.5;
+      fny -= 0.5;
+      fax += 0.5;
+      fay += 0.5;
+    }
 }
-
+}
 
 function colisionMonedes() {
   if (
@@ -203,6 +252,31 @@ function colisionMonedes() {
   }
 }
 
+function colisionFantasma(){
+  var centroXGeorge = gx + anchoGeorge/2; // centro en el eje X de George
+  var centroYGeorge = gy + altoGeorge/2; // centro en el eje Y de George
+  
+  if (
+    (centroXGeorge > fax &&
+    centroXGeorge < fax + anchoFantasma &&
+    centroYGeorge > fay &&
+    centroYGeorge < fay + altoFantasma)
+
+    ||    
+    
+    (centroXGeorge > fnx &&
+    centroXGeorge < fnx + anchoFantasma &&
+    centroYGeorge > fny &&
+    centroYGeorge < fny + altoFantasma)
+    
+    ) {
+    posicionarGeorge();
+    posicionarFantasmaAzul();
+    posicionarFantasmaNegro();
+  }
+}
+
+
 function dibujar() {
   //LIMPIAR CANVAS
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -212,7 +286,19 @@ function dibujar() {
   //PINTA EL FONDO EN EL CANVAS
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.drawImage(
+  // ctx.drawImage(
+  //   george, //Imagen George
+  //   posicionGeorge, //Posicion X en la imagen
+  //   indiceGeorge * altoGeorge, //Posicion Y en la Imagen
+  //   anchoGeorge, //Ancho de la Imagen
+  //   altoGeorge, //Alto de la imagen
+  //   gx, //Posicion X en la pantalla
+  //   gy, //Posicion Y en la pantalla
+  //   anchoGeorge, //Ancho en la pantalla
+  //   altoGeorge //Alto en la pantalla
+  // );
+
+    ctx.drawImage(
     george, //Imagen George
     posicionGeorge, //Posicion X en la imagen
     indiceGeorge * altoGeorge, //Posicion Y en la Imagen
@@ -272,6 +358,18 @@ function dibujar() {
     altoFantasma * 0.8 //Alto en la pantalla
   );
 
+  ctx.drawImage(
+    sword, //Imagen moneda Dorada
+    0, //Posicion X en la imagen
+    0, //Posicion Y en la Imagen
+    anchoFantasma, //Ancho de la Imagen
+    altoFantasma, //Alto de la imagen
+    sx, //Posicion X en la pantalla
+    sy + 15, //Posicion Y en la pantalla
+    anchoEspada * 2, //Ancho en la pantalla
+    altoEspada * 2 //Alto en la pantalla
+  );
+
 
   if (indiceGeneral % 10 == 0) {
     indiceMonedaDorada++;
@@ -282,7 +380,7 @@ function dibujar() {
       
     }
 
-    if (indiceGeorge % 20 == 0){
+    if (indiceGeorge % 10 == 0){
       indiceFantasmaAzul++;
       indiceFantasmaNegro++;
     }
@@ -311,6 +409,8 @@ function dibujar() {
   colisionMonedes();
   fantasma();
   fantasmaNegroMover();
+  colisionEntreFantasma()
+  colisionFantasma();
   
   // setInterval(dibujar,100);
 
