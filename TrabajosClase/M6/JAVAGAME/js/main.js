@@ -131,31 +131,30 @@ document.addEventListener('keyup', (event) => {
 });
 
 document.addEventListener("keydown", function (event) {
- if (teclasPulsadas['s'] && teclasPulsadas['d'] ){
+  if (teclasPulsadas['s'] && teclasPulsadas['d'] ){
     if (gx + 5 + anchoGeorge < canvas.width && gy + 5 + altoGeorge < canvas.height) {
       gx += 5;
       gy += 5;
       posicionGeorge = 135;
     }
-  }else if (teclasPulsadas['s'] && teclasPulsadas['a'] ){
-    if (gx + 5 + anchoGeorge < canvas.width && gy - 5 > 0 ) {
+  } else if (teclasPulsadas['s'] && teclasPulsadas['a'] ){
+    if (gx - 5 > 0 && gy + 5 + altoGeorge < canvas.height) {
       gx -= 5;
       gy += 5;
       posicionGeorge = 45;
     }
-  }else if (teclasPulsadas['w'] && teclasPulsadas['a'] ){
-    if (gx + 5 + anchoGeorge < canvas.width && gx - 5 > 0 ) {
+  } else if (teclasPulsadas['w'] && teclasPulsadas['a'] ){
+    if (gx - 5 > 0 && gy - 5 > 0) {
       gx -= 8;
       gy -= 8;
       posicionGeorge = 45;
     }
-  }else if (teclasPulsadas['s']) {
+  } else if (teclasPulsadas['s']) {
     if (gy + 5 + altoGeorge < canvas.height) {
       gy += 10;
       posicionGeorge = 0;
-      
     }
-  }else if (teclasPulsadas['w'] && teclasPulsadas['d'] ){
+  } else if (teclasPulsadas['w'] && teclasPulsadas['d'] ){
     if (gx + 5 + anchoGeorge < canvas.width && gy - 5 > 0 ) {
       gx += 8;
       gy -= 8;
@@ -177,6 +176,7 @@ document.addEventListener("keydown", function (event) {
       posicionGeorge = 135;
     }
   }
+  
 });
 
 function fantasma() {
@@ -210,10 +210,10 @@ function fantasmaNegroMover() {
 
 function colisionEntreFantasma(){
   if (
-    fax < fnx + anchoFantasma &&
-    fax + anchoFantasma > fnx &&
-    fay < fny + altoFantasma &&
-    fay + altoFantasma > fny
+    fax < fnx + anchoFantasma -30 &&
+    fax + anchoFantasma - 30 > fnx &&
+    fay < fny + altoFantasma - 30 &&
+    fay + altoFantasma - 30  > fny
   ) {
     // Hay colisión entre los fantasmas
     if (fnx > fax) {
@@ -251,6 +251,31 @@ function colisionMonedes() {
     posicionarMonedaTransparente();
   }
 }
+
+function colisionFantasma(){
+  var centroXGeorge = gx + anchoGeorge/2; // centro en el eje X de George
+  var centroYGeorge = gy + altoGeorge/2; // centro en el eje Y de George
+  
+  if (
+    (centroXGeorge > fax &&
+    centroXGeorge < fax + anchoFantasma &&
+    centroYGeorge > fay &&
+    centroYGeorge < fay + altoFantasma)
+
+    ||    
+    
+    (centroXGeorge > fnx &&
+    centroXGeorge < fnx + anchoFantasma &&
+    centroYGeorge > fny &&
+    centroYGeorge < fny + altoFantasma)
+    
+    ) {
+    posicionarGeorge();
+    posicionarFantasmaAzul();
+    posicionarFantasmaNegro();
+  }
+}
+
 
 function dibujar() {
   //LIMPIAR CANVAS
@@ -355,7 +380,7 @@ function dibujar() {
       
     }
 
-    if (indiceGeorge % 20 == 0){
+    if (indiceGeorge % 10 == 0){
       indiceFantasmaAzul++;
       indiceFantasmaNegro++;
     }
@@ -385,6 +410,7 @@ function dibujar() {
   fantasma();
   fantasmaNegroMover();
   colisionEntreFantasma()
+  colisionFantasma();
   
   // setInterval(dibujar,100);
 
