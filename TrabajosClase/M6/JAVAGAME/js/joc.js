@@ -55,28 +55,28 @@ window.addEventListener('keyup', (evento) => {
     // detectar colisiones entre el protagonista y los enemigos/recompensas
   };
   
-  Joc.prototype.dibujar = function() {
-    const ctx = this.espaiDeJoc.ctx;
-  
-    // Limpiar el canvas
-    ctx.clearRect(0, 0, this.espaiDeJoc.width, this.espaiDeJoc.height);
-  
-    // Dibujar el fondo
-    ctx.fillStyle = ctx.createPattern(this.espaiDeJoc.imagen, 'repeat');
-    ctx.fillRect(0, 0, this.espaiDeJoc.width, this.espaiDeJoc.height);
-  
-    // Dibujar el protagonista
-    this.protagonista.dibujar(ctx);
-  };
-  
-  var joc = new Joc();
-  
-  function bucle() {
-    joc.actualizar();
-    joc.detectarColisiones();
-    joc.dibujar();
+Joc.prototype.dibujar = function() {
+  const ctx = this.espaiDeJoc.ctx;
 
-  }
-  
+  // Limpiar el canvas
+  ctx.clearRect(0, 0, this.espaiDeJoc.width, this.espaiDeJoc.height);
+
+  // Dibujar el fondo
+  ctx.fillStyle = ctx.createPattern(this.espaiDeJoc.imagen, 'repeat');
+  ctx.fillRect(0, 0, this.espaiDeJoc.width, this.espaiDeJoc.height);
+
+  // Dibujar el protagonista
+  this.protagonista.dibujar(ctx);
+};
+
+var joc = new Joc();
+
+function bucle() {
+  joc.actualizar();
+  joc.detectarColisiones();
+  joc.dibujar();
+
   requestAnimationFrame(bucle);
-  
+}
+
+requestAnimationFrame(bucle);
