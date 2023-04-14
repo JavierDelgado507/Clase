@@ -1,15 +1,18 @@
-export class Element  {
-    constructor(x, y, ancho, alto, imagen, posicionX, posicionY, indice) {
-      this.x = x;
-      this.y = y;
-      this.ancho = ancho;
-      this.alto = alto;
-      this.imagen = imagen;
-      this.posicionX = posicionX;
-      this.posicionY = posicionY;
-      this.indice = indice;
-      this.velocidad = velocidad;
-    }
+export class Element {
+  constructor(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla) {
+    this.x = x;
+    this.y = y;
+    this.ancho = ancho;
+    this.alto = alto;
+    this.imagen = imagen;
+    this.posicionX = posicionX;
+    this.posicionY = posicionY;
+    this.anchoPantalla = anchoPantalla;
+    this.altoPantalla = altoPantalla;
+  }
+  
+
+
   
     // métodos para obtener los atributos
     getX() {
@@ -40,14 +43,13 @@ export class Element  {
       return this.posicionY;
     }
   
-    getIndice() {
-      return this.indice;
+    getAnchoPantalla(){
+      return this.anchoPantalla;
     }
-  
-    getVelocidad() {
-      return this.velocidad;
+    
+    getAltoPantalla(){
+      return this.altoPantalla;
     }
-  
     // métodos para actualizar los atributos
     setX(x) {
       this.x = x;
@@ -77,27 +79,27 @@ export class Element  {
       this.posicionY = posicionY;
     }
   
-    setIndice(indice) {
-      this.indice = indice;
+    setAnchoPantalla(anchoPantalla){
+      this.anchoPantalla = anchoPantalla
     }
-  
-    setVelocidad(velocidad) {
-      this.velocidad = velocidad;
+
+    setAltoPantalla(altoPantalla){
+      this.altoPantalla = altoPantalla
     }
-  
     // métodos para dibujar el elemento en el canvas
     dibujar(ctx) {
       ctx.drawImage(
         this.imagen,
-        this.posicionX,
-        this.indice * this.alto,
-        this.ancho,
-        this.alto,
         this.x,
         this.y,
         this.ancho,
+        this.alto,
+        this.posicionX,
+        this.posicionY,
+        this.ancho ,
         this.alto
       );
+      
     }
   }
   
