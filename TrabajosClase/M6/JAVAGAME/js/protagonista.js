@@ -2,9 +2,10 @@ import { Element } from './element.js';
 
 export class Protagonista extends Element {
   constructor(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla, espaiDeJoc) {
-    super(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla, espaiDeJoc);
+    super(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla);
 
     this.teclasPulsadas = {};
+    this.espaiDeJoc = espaiDeJoc; // Asignar la instancia de EspaiDeJoc a una propiedad en Protagonista
   
     document.addEventListener('keydown', (event) => {
       this.teclasPulsadas[event.key] = true;
@@ -18,6 +19,7 @@ export class Protagonista extends Element {
 
   moverArriba() {
     if (this.teclasPulsadas['w']) {
+      if(this.getPosicionY() - 5 > 0)
       this.posicionY -= 10;
       this.x = 90;
       
@@ -25,11 +27,12 @@ export class Protagonista extends Element {
   }
 
   moverAbajo() {
-    if (this.teclasPulsadas['s'])  {
-     
+    if (this.teclasPulsadas['s']) {
+      const canvasAltura = this.espaiDeJoc.getHeight();
+      if (this.getPosicionY() + this.getAltoPantalla() + 5 < canvasAltura) {
         this.posicionY += 10;
         this.x = 0;
-    
+      }
     }
   }
   
@@ -37,13 +40,19 @@ export class Protagonista extends Element {
 
   moverIzquierda() {
     if (this.teclasPulsadas['a']) {
+     
+      if(this.getPosicionX() - 5 > 0){
+        
       this.posicionX -= 10;
       this.x = 45;
+      }
     }
   }
 
   moverDerecha() {
     if (this.teclasPulsadas['d'] ) {
+      const canvasAncho = this.espaiDeJoc.getWidth();
+      if (this.getPosicionX() + 5 + this.getAnchoPantalla() < canvasAncho)
       this.posicionX += 10;
       this.x = 135;
     }

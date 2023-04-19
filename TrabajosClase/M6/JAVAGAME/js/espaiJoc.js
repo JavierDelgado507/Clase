@@ -27,3 +27,7 @@ EspaiDeJoc.prototype.dibujar = function() {
 EspaiDeJoc.prototype.getHeight = function() {
   return this.canvas.height;
 };
+
+EspaiDeJoc.prototype.getWidth = function() {
+  return this.canvas.width;
+};

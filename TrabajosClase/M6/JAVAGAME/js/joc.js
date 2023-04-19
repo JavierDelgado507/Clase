@@ -5,14 +5,13 @@ function Joc() {
     this.puntuacio = this.puntuacio
     const imgProtagonista = new Image();
     imgProtagonista.src = "./../JAVAGAME/assets/george.png";
-    this.protagonista = new Protagonista(imgProtagonista, 0, 0, 45, 45, 0, 0, 45 , 45 );
+    this.protagonista = new Protagonista(imgProtagonista, 0, 0, 45, 45, 0, 0, 45 , 45,this.espaiDeJoc);
 
     console.log(this.protagonista);
     this.enemics = [];
     this.recompenses = [];
     this.teclasPulsadas = {};
-    console.log(this.espaiDeJoc.canvas.height
-      );
+
   }
   
   
@@ -28,9 +27,10 @@ function Joc() {
   Joc.prototype.actualizar = function() {
     // actualizar la posición del protagonista y de los enemigos
     this.protagonista.moverArriba();
-    this.protagonista.moverAbajo();
+    this.protagonista.moverAbajo(this.espaiDeJoc.canvas.height);
     this.protagonista.moverIzquierda();
     this.protagonista.moverDerecha();
+    
     
   };
   
