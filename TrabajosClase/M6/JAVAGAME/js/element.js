@@ -10,10 +10,7 @@ export class Element {
     this.anchoPantalla = anchoPantalla;
     this.altoPantalla = altoPantalla;
   }
-  
 
-
-  
     // métodos para obtener los atributos
     getX() {
       return this.x;

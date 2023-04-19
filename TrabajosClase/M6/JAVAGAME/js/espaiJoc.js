@@ -13,9 +13,17 @@ function EspaiDeJoc(width, height, imageUrl) {
     that.pat = that.ctx.createPattern(that.imagen, 'repeat');
     that.dibujar();
   };
-}
+};
 
-  EspaiDeJoc.prototype.dibujar = function() {
-    this.ctx.fillStyle = this.pat;
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-  };
+EspaiDeJoc.prototype.dibujar = function() {
+  // Limpiar el canvas
+  this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  
+  // Dibujar el fondo
+  this.ctx.fillStyle = this.pat;
+  this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+};
+
+EspaiDeJoc.prototype.getHeight = function() {
+  return this.canvas.height;
+};
