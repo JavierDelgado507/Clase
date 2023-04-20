@@ -3,10 +3,10 @@ import { Element } from './element.js';
 export class Protagonista extends Element {
   constructor(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla, espaiDeJoc) {
     super(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla);
-
+    
     this.teclasPulsadas = {};
     this.espaiDeJoc = espaiDeJoc; // Asignar la instancia de EspaiDeJoc a una propiedad en Protagonista
-  
+    
     document.addEventListener('keydown', (event) => {
       this.teclasPulsadas[event.key] = true;
     });

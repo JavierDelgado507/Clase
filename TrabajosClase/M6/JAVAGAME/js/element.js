@@ -9,6 +9,7 @@ export class Element {
     this.posicionY = posicionY;
     this.anchoPantalla = anchoPantalla;
     this.altoPantalla = altoPantalla;
+    
   }
 
     // métodos para obtener los atributos
@@ -96,7 +97,8 @@ export class Element {
         this.ancho ,
         this.alto
       );
-      
+
     }
+    
   }
   

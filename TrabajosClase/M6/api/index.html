@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>League of Legends Rankings</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Tabla</a>
+      <a href="piechart.html">Grafico Jugadores en Cada Liga</a>
+      <a href="mapa.html">Mapa</a>
+    </nav> 
+  <div class="container">
+    <aside class="aside-left"><img src="side.jpg" alt=""></aside>
+    <div id="header">
+    <div class="container2">
+    <select id="queue">
+      <option value="RANKED_SOLO_5x5">RANKED SOLO</option>
+      <option value="RANKED_FLEX_SR">RANKED FLEX</option>
+    </select>
+    <select id="tier">
+      <option value="IRON">IRON</option>
+      <option value="BRONZE">BRONZE</option>
+      <option value="SILVER">SILVER</option>
+      <option value="GOLD">GOLD</option>
+      <option value="PLATINUM">PLATINUM</option>
+      <option value="DIAMOND">DIAMOND</option>
+      <option value="MASTER">MASTER</option>
+      <option value="GRANDMASTER">GRANDMASTER</option>
+      <option value="CHALLENGER">CHALLENGER</option>
+    </select>
+    <select id="division">
+      <option value="I">I</option>
+      <option value="II">II</option>
+      <option value="III">III</option>
+      <option value="IV">IV</option>
+    </select>
+    <button id="previousPage">Previous Page</button>
+    <span id="numberPage"></span>
+    <button id="nextPage">Next Page</button>
+    <button id="update">Actualizar</button> 
+  </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Summoner Name</th>
+          <th>League Points</th>
+          <th>Wins</th>
+          <th>Losses</th>
+          <th>Hot Streak</th>
+          <th>Tier</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+    <aside class="aside-right"> <img src="side.jpg"> </aside>
+  </div>
+    <script defer type="text/javascript" src="hola.js"></script>
+  
+  </body>
+</html>
