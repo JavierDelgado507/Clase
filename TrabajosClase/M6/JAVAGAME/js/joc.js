@@ -1,60 +1,54 @@
-import { Protagonista } from './protagonista.js';
+var crearJoc = function() {
+  var joc = {};
+  joc.espaiDeJoc = document.getElementById("miCanvas");
+  joc.puntuacio = 0;
+  
+  return joc;
+};
 
-function Joc() {
-  this.espaiDeJoc = new EspaiDeJoc(800, 600, "./../JAVAGAME/assets/hierba.jpg");
-    this.puntuacio = this.puntuacio
-    const imgProtagonista = new Image();
-    imgProtagonista.src = "./../JAVAGAME/assets/george.png";
-    this.protagonista = new Protagonista(imgProtagonista, 0, 0, 45, 45, 0, 0, 45 , 45,this.espaiDeJoc);
-
-    console.log(this.protagonista);
-    this.enemics = [];
-    this.recompenses = [];
-    this.teclasPulsadas = {};
-
+var crearEspaiDeJoc = function() {
+  var espaiDeJoc = {};
+  espaiDeJoc.canvas = document.getElementById("miCanvas");
+  espaiDeJoc.canvas.width = 800;
+  espaiDeJoc.canvas.height = 600;
+  espaiDeJoc.context = espaiDeJoc.canvas.getContext("2d");
+  espaiDeJoc.imatgeFons = new Image();
+  espaiDeJoc.imatgeFons.src = "./../assets/hierba.jpg";
+  
+  espaiDeJoc.dibuixar = function() {
+    // Dibujar el fondo
+    const patron = this.context.createPattern(this.imatgeFons, "repeat");
+    this.context.fillStyle = patron;
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
   }
-  
-  
-  Joc.prototype.crearEnemic = function() {
-    // crear enemic y añadirlo al array de enemics
-  };
-  
-  Joc.prototype.crearRecompensa = function() {
-    // crear recompensa y añadirla al array de recompenses
-  };
+  return espaiDeJoc;
+};
 
-  // métodos para actualizar el estado del juego
-  Joc.prototype.actualizar = function() {
-    // actualizar la posición del protagonista y de los enemigos
-    this.protagonista.moverArriba();
-    this.protagonista.moverAbajo(this.espaiDeJoc.canvas.height);
-    this.protagonista.moverIzquierda();
-    this.protagonista.moverDerecha();
-    
-    
-  };
-  
-  Joc.prototype.detectarColisiones = function() {
-    // detectar colisiones entre el protagonista y los enemigos/recompensas
-  };
-  
-  Joc.prototype.dibujar = function() {
-    // Llama al método dibujar de EspaiDeJoc para dibujar el fondo
-    this.espaiDeJoc.dibujar();
-    
-    // Dibujar el protagonista
-    this.protagonista.dibujar(this.espaiDeJoc.ctx);
-  };
-  
 
-var joc = new Joc();
 
+var crearPuntuacio = function() {
+  var puntuacio = {};
+  puntuacio.valor = 0;
+  puntuacio.actualitzar = function() {
+    puntuacio.valor++;
+  };
+  return puntuacio;
+};
+
+var joc = crearJoc();
+var espaiDeJoc = crearEspaiDeJoc();
+var puntuacio = crearPuntuacio();
+
+// Loop de juego
 function loop() {
-  joc.actualizar();
-  joc.detectarColisiones();
-  joc.dibujar();
+  // Dibujar el canvas
+  espaiDeJoc.dibuixar();
 
+  // Solicitar un nuevo frame
   requestAnimationFrame(loop);
 }
 
+// Iniciar el loop
 loop();
+
+// ...

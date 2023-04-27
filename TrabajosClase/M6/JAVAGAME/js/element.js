@@ -1,104 +1,84 @@
-export class Element {
-  constructor(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla) {
-    this.x = x;
-    this.y = y;
-    this.ancho = ancho;
-    this.alto = alto;
-    this.imagen = imagen;
-    this.posicionX = posicionX;
-    this.posicionY = posicionY;
-    this.anchoPantalla = anchoPantalla;
-    this.altoPantalla = altoPantalla;
-    
-  }
+var Element = function(imagen, x, y, ancho, alto, posicionX, posicionY, anchoPantalla, altoPantalla) {
+  // atributos privados
+  var _imagen = imagen;
+  var _x = x;
+  var _y = y;
+  var _ancho = ancho;
+  var _alto = alto;
+  var _posicionX = posicionX;
+  var _posicionY = posicionY;
+  var _anchoPantalla = anchoPantalla;
+  var _altoPantalla = altoPantalla;
 
-    // métodos para obtener los atributos
-    getX() {
-      return this.x;
-    }
+  this.dibujar = function(contexto) {
+    contexto.drawImage(_imagen, _x, _y, _ancho, _alto, _posicionX, _posicionY, _anchoPantalla, _altoPantalla);
+  };
+  // métodos públicos para acceder y actualizar atributos privados
+  this.getImagen = function() {
+    return _imagen;
+  };
   
-    getY() {
-      return this.y;
-    }
+  this.setX = function(nuevoX) {
+    _x = nuevoX;
+  };
   
-    getWidth() {
-      return this.ancho;
-    }
+  this.getX = function() {
+    return _x;
+  };
   
-    getHeight() {
-      return this.alto;
-    }
+  this.setY = function(nuevoY) {
+    _y = nuevoY;
+  };
   
-    getImage() {
-      return this.imagen;
-    }
+  this.getY = function() {
+    return _y;
+  };
   
-    getPosicionX() {
-      return this.posicionX;
-    }
+  this.setAncho = function(nuevoAncho) {
+    _ancho = nuevoAncho;
+  };
   
-    getPosicionY() {
-      return this.posicionY;
-    }
+  this.getAncho = function() {
+    return _ancho;
+  };
   
-    getAnchoPantalla(){
-      return this.anchoPantalla;
-    }
-    
-    getAltoPantalla(){
-      return this.altoPantalla;
-    }
-    // métodos para actualizar los atributos
-    setX(x) {
-      this.x = x;
-    }
+  this.setAlto = function(nuevoAlto) {
+    _alto = nuevoAlto;
+  };
   
-    setY(y) {
-      this.y = y;
-    }
+  this.getAlto = function() {
+    return _alto;
+  };
   
-    setWidth(ancho) {
-      this.ancho = ancho;
-    }
+  this.setPosicionX = function(nuevaPosicionX) {
+    _posicionX = nuevaPosicionX;
+  };
   
-    setHeight(alto) {
-      this.alto = alto;
-    }
+  this.getPosicionX = function() {
+    return _posicionX;
+  };
   
-    setImage(imagen) {
-      this.imagen = imagen;
-    }
+  this.setPosicionY = function(nuevaPosicionY) {
+    _posicionY = nuevaPosicionY;
+  };
   
-    setPosicionX(posicionX) {
-      this.posicionX = posicionX;
-    }
+  this.getPosicionY = function() {
+    return _posicionY;
+  };
   
-    setPosicionY(posicionY) {
-      this.posicionY = posicionY;
-    }
+  this.setAnchoPantalla = function(nuevoAnchoPantalla) {
+    _anchoPantalla = nuevoAnchoPantalla;
+  };
   
-    setAnchoPantalla(anchoPantalla){
-      this.anchoPantalla = anchoPantalla
-    }
-
-    setAltoPantalla(altoPantalla){
-      this.altoPantalla = altoPantalla
-    }
-    // métodos para dibujar el elemento en el canvas
-    dibujar(ctx) {
-      ctx.drawImage(
-        this.imagen,
-        this.x,
-        this.y,
-        this.ancho,
-        this.alto,
-        this.posicionX,
-        this.posicionY,
-        this.ancho ,
-        this.alto
-      );
-
-    }
-    
-  }
+  this.getAnchoPantalla = function() {
+    return _anchoPantalla;
+  };
   
+  this.setAltoPantalla = function(nuevoAltoPantalla) {
+    _altoPantalla = nuevoAltoPantalla;
+  };
+  
+  this.getAltoPantalla = function() {
+    return _altoPantalla;
+  };
+};
