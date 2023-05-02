@@ -36,28 +36,28 @@ let sy;
 const ctx = canvas.getContext("2d");
 
 const fondo = new Image();
-fondo.src = "./../JAVAGAME/assets/hierba.jpg";
+fondo.src = "./../assets/hierba.jpg";
 
 const george = new Image();
-george.src = "./../JAVAGAME/assets/george.png";
+george.src = "./../assets/george.png";
 
 const monedaDorada = new Image();
-monedaDorada.src = "./../JAVAGAME/assets/coin_avr_color.png";
+monedaDorada.src = "./../assets/coin_avr_color.png";
 
 const monedaTransparente = new Image();
-monedaTransparente.src = "./../JAVAGAME/assets/coin_avr.png";
+monedaTransparente.src = "./../assets/coin_avr.png";
 
 const fantasmaAzul = new Image();
-fantasmaAzul.src = "./../JAVAGAME/assets/fantasmaAzul.png";
+fantasmaAzul.src = "./../assets/fantasmaAzul.png";
 
 const fantasmaNegro = new Image();
-fantasmaNegro.src = "./../JAVAGAME/assets/fantasmaNegro.png";
+fantasmaNegro.src = "./../assets/fantasmaNegro.png";
 
 const sword = new Image();
-sword.src = "./../JAVAGAME/assets/sword.png";
+sword.src = "./../assets/sword.png";
 
 const yase = new Image();
-yase.src = "./../JAVAGAME/assets/yase.png";
+yase.src = "./../assets/yase.png";
 
 fondo.onload = function () {
   //UNA sola Vez
@@ -371,7 +371,7 @@ function dibujar() {
   );
 
 
-  if (indiceGeneral % 10 == 0) {
+  if (indiceGeneral % 50 == 0) {
     indiceMonedaDorada++;
    
 
@@ -413,6 +413,6 @@ function dibujar() {
   colisionFantasma();
   
   // setInterval(dibujar,100);
-
+  
   requestAnimationFrame(dibujar);
 }

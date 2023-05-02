@@ -7,8 +7,29 @@
     <title>Projecte M06UF2</title>
 </head>
 <body>
-    <canvas id="miCanvas"></canvas>
+    <div style="text-align: center;">
+    <p>Puntuación: <span id="puntuacion">0</span></p>
+    <p>Vida: <span id="vida"></span> 
+        <div style="display: flex;"></div>
+        <button id="boton-pausar" class="boton-pausar">Pausar</button>
+        <button id="reiniciar">Reiniciar</button>
+        </div>
+    </p>
+    
 
-    <script src="js/main.js"></script>
+    <canvas id="miCanvas" style="display: block;margin: 0 auto;"></canvas>
+
+    <p style="text-align: center;">Tu puntuación máxima es: <span id="puntuacionMaxima"></span></p>
+
+
+</div>
+    <script src="./js/element.js"></script>
+    <script src="./js/recompensa.js"></script>
+    <script src="./js/protagonista.js"></script>
+    <script src="./js/enemic.js"></script>
+    <script src="./js/joc.js "></script>
+
+    <!-- <script src="./js/main.js"></script> -->
+
 </body>
 </html>
